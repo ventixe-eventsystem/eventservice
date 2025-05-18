@@ -11,7 +11,6 @@ public class EventService(IEventRepository repository)
   {
     var entity = new EventEntity
     {
-      Id = model.Id,
       Name = model.Name,
       Location = model.Location,
       Description = model.Description,
@@ -37,5 +36,21 @@ public class EventService(IEventRepository repository)
     });
 
     return allEvents;
+  }
+
+  public async Task<EventModel> GetEventByIdAsync(string id)
+  {
+    var entity = await _repository.GetByIdAsync(id) ?? throw new Exception("Event not found");
+
+    var model = new EventModel
+    {
+      Id = entity.Id,
+      Name = entity.Name,
+      Location = entity.Location,
+      Description = entity.Description,
+      Date = entity.Date,
+      Time = entity.Time
+    };
+    return model;
   }
 }

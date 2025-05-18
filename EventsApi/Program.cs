@@ -1,3 +1,4 @@
+using Business.Services;
 using Data.Contexts;
 using Data.Interfaces;
 using Data.Repositories;
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<DataContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
+builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventPackageRepository, EventPackageRepository>();
 
