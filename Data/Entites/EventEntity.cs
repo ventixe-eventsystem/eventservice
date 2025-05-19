@@ -10,8 +10,6 @@ public class EventEntity
   public string? Location { get; set; }
   public string? Description { get; set; }
   [Column(TypeName = "datetime2")]
-  public DateTime Date { get; set; }
-  [Column(TypeName = "datetime2")]
-  public DateTime Time { get; set; }
+  public DateTime DateAndTime { get; set; }
   public ICollection<EventPackageEntity> Packages { get; set; } = [];
 }

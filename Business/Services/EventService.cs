@@ -14,8 +14,7 @@ public class EventService(IEventRepository repository)
       Name = model.Name,
       Location = model.Location,
       Description = model.Description,
-      Date = model.Date,
-      Time = model.Time
+      DateAndTime = model.DateAndTime
     };
     var result = await _repository.CreateAsync(entity);
     return result > 0;
@@ -31,8 +30,7 @@ public class EventService(IEventRepository repository)
       Name = e.Name,
       Location = e.Location,
       Description = e.Description,
-      Date = e.Date,
-      Time = e.Time
+      DateAndTime = e.DateAndTime,
     });
 
     return allEvents;
@@ -48,9 +46,16 @@ public class EventService(IEventRepository repository)
       Name = entity.Name,
       Location = entity.Location,
       Description = entity.Description,
-      Date = entity.Date,
-      Time = entity.Time
+      DateAndTime = entity.DateAndTime
     };
     return model;
+  }
+
+  public async Task<bool> Remove(string id)
+  {
+    if (string.IsNullOrEmpty(id))
+      throw new ArgumentException("Id cannot be null or empty", nameof(id));
+    var result = await _repository.Delete(id);
+    return result > 0;
   }
 }

@@ -20,9 +20,6 @@ namespace EventsApi.Controllers
     {
       var response = await _eventService.GetAllEventsAsync();
 
-      if (response == null || !response.Any())
-        return NotFound("No events found.");
-
       return Ok(response);
     }
 
@@ -35,7 +32,18 @@ namespace EventsApi.Controllers
       if (!result)
         return BadRequest("Failed to create event.");
 
-      return Created();
+      return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveEvent(string id)
+    {
+      if (string.IsNullOrEmpty(id))
+        return BadRequest("Event ID is null or empty.");
+      var result = await _eventService.Remove(id);
+      if (!result)
+        return NotFound("Event not found.");
+      return Ok();
     }
   }
 }

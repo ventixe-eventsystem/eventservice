@@ -27,23 +27,35 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
   }
   public async Task<TEntity?> GetByIdAsync(object id)
   {
-    var result = await _dbSet.FindAsync(id);
+    if (id is string || id is int)
+    {
+      var entity = await _dbSet.FindAsync(id);
+      if (entity == null)
+        return null;
 
-    return result == null ? result : null;
+      return entity;
+    }
+    else
+      throw new ArgumentException("Id must be of type string or int.");
+
   }
   public async Task<int> UpdateAsync(TEntity entity)
   {
     _dbSet.Update(entity);
     return await _context.SaveChangesAsync();
   }
-  public async Task<int> DeleteAsync(object id)
+  public async Task<int> Delete(object id)
   {
-    var entity = await _dbSet.FindAsync(id);
-    if (entity == null)
+    if (id is string || id is int)
     {
-      return 0;
+      var entity = await _dbSet.FindAsync(id);
+      if (entity == null)
+        return 0;
+
+      _dbSet.Remove(entity);
+      return await _context.SaveChangesAsync();
     }
-    _dbSet.Remove(entity);
-    return await _context.SaveChangesAsync();
+    else
+      throw new ArgumentException("Id must be of type string or int.");
   }
 }
