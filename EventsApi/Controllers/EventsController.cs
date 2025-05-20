@@ -23,6 +23,14 @@ namespace EventsApi.Controllers
       return Ok(response);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetEvent(string id)
+    {
+      var response = await _eventService.GetEventByIdAsync(id);
+
+      return Ok(response);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateEvent(EventModel model)
     {
