@@ -13,9 +13,11 @@ builder.Services.AddDbContext<DataContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<PackageService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventPackageRepository, EventPackageRepository>();
+builder.Services.AddScoped<IPackageRepository, PackageRepository>();
 
 var app = builder.Build();
 

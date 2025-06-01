@@ -8,4 +8,5 @@ public class EventModel
   public string? Location { get; set; }
   public string? Description { get; set; }
   public DateTime DateAndTime { get; set; }
+  public int MaxAttendees { get; set; } = 0;
 }

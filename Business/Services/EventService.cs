@@ -14,7 +14,8 @@ public class EventService(IEventRepository repository)
       Name = model.Name,
       Location = model.Location,
       Description = model.Description,
-      DateAndTime = model.DateAndTime
+      DateAndTime = model.DateAndTime,
+      MaxAttendees = model.MaxAttendees > 0 ? model.MaxAttendees : 0
     };
     var result = await _repository.CreateAsync(entity);
     return result > 0;
@@ -31,6 +32,7 @@ public class EventService(IEventRepository repository)
       Location = e.Location,
       Description = e.Description,
       DateAndTime = e.DateAndTime,
+      MaxAttendees = e.MaxAttendees
     });
 
     return allEvents;
@@ -46,7 +48,8 @@ public class EventService(IEventRepository repository)
       Name = entity.Name,
       Location = entity.Location,
       Description = entity.Description,
-      DateAndTime = entity.DateAndTime
+      DateAndTime = entity.DateAndTime,
+      MaxAttendees = entity.MaxAttendees > 0 ? entity.MaxAttendees : 0
     };
     return model;
   }

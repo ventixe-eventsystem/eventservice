@@ -11,5 +11,6 @@ public class EventEntity
   public string? Description { get; set; }
   [Column(TypeName = "datetime2")]
   public DateTime DateAndTime { get; set; }
+  public int MaxAttendees { get; set; }
   public ICollection<EventPackageEntity> Packages { get; set; } = [];
 }
