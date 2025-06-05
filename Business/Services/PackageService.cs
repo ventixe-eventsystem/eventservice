@@ -2,7 +2,7 @@
 using Data.Interfaces;
 
 namespace Business.Services;
-public class PackageService(IPackageRepository respository)
+public class PackageService(IPackageRepository respository) : IPackageService
 {
   private readonly IPackageRepository _respository = respository;
 

@@ -1,20 +1,21 @@
 ﻿using Business.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventsApi.Controllers
+namespace EventsApi.Controllers;
+
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class PackageController(PackageService packageService) : ControllerBase
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class PackageController(PackageService packageService) : ControllerBase
+  private readonly PackageService _packageService = packageService;
+
+  [HttpGet("GetAllPackages")]
+  public async Task<IActionResult> GetAllPackages()
   {
-    private readonly PackageService _packageService = packageService;
+    var packages = await _packageService.GetAllPackagesAsync();
 
-    [HttpGet("GetAllPackages")]
-    public async Task<IActionResult> GetAllPackages()
-    {
-      var packages = await _packageService.GetAllPackagesAsync();
-
-      return Ok(packages);
-    }
+    return Ok(packages);
   }
 }

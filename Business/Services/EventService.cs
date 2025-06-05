@@ -1,9 +1,10 @@
-﻿using Business.Models;
+﻿using Business.Interfaces;
+using Business.Models;
 using Data.Entites;
 using Data.Interfaces;
 
 namespace Business.Services;
-public class EventService(IEventRepository repository)
+public class EventService(IEventRepository repository) : IEventService
 {
   private readonly IEventRepository _repository = repository;
 
