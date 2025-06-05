@@ -7,15 +7,24 @@ namespace EventsApi.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class PackageController(PackageService packageService) : ControllerBase
+public class PackageController(IPackageService packageService) : ControllerBase
 {
-  private readonly PackageService _packageService = packageService;
+  private readonly IPackageService _packageService = packageService;
 
   [HttpGet("GetAllPackages")]
   public async Task<IActionResult> GetAllPackages()
   {
-    var packages = await _packageService.GetAllPackagesAsync();
+    try
+    {
+      var packages = await _packageService.GetAllPackagesAsync();
+      if (packages == null || !packages.Any())
+        return NotFound("No packages found.");
 
-    return Ok(packages);
+      return Ok(packages);
+    }
+    catch (Exception ex)
+    {
+      return StatusCode(500, $"An error occurred while retrieving packages: {ex.Message}");
+    }
   }
 }
